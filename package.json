@@ -1,0 +1,14 @@
+{
+  "name": "TStest",
+  "description": "ably ts test",
+  "version": "0.0.1",
+  "main": "./index.js",
+  "dependencies": {
+    "ably": "1.0.13"
+  },
+  "devDependencies": {
+    "gulp": "3.9.1",
+    "gulp-typescript": "4.0.1",
+    "typescript": "2.7.1"
+  }
+}
