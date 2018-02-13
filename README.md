@@ -4,4 +4,5 @@ To run:
 
 - `npm install -g typescript`
 - `npm install`
-- `gulp && node index.js`
+- `rm node_modules/ably/browser/static/ably.d.ts && rm node_modules/ably/ably.d.ts` 
+- `tsc && node index.js`
