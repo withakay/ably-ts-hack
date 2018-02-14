@@ -28,6 +28,6 @@
     "node_modules/ably/ably.d.ts"
   ],
   "files": [
-    "src/ably.d.ts"
+    "src/ably_old.d.ts"
   ]
 }

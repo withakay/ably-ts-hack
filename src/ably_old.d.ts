@@ -3,7 +3,8 @@
 // Definitions by: Ably <https://github.com/ably/>
 // Definitions: https://github.com/DefinitelyTyped/DefinitelyTyped
 
-declare namespace ablyLib {
+export declare namespace Realtime {
+
     namespace ChannelState {
         type INITIALIZED = 'initialized';
         type ATTACHING = 'attaching';
@@ -13,14 +14,7 @@ declare namespace ablyLib {
         type SUSPENDED = "suspended";
         type FAILED = "failed";
     }
-    type ChannelState =
-        ChannelState.FAILED
-        | ChannelState.INITIALIZED
-        | ChannelState.SUSPENDED
-        | ChannelState.ATTACHED
-        | ChannelState.ATTACHING
-        | ChannelState.DETACHED
-        | ChannelState.DETACHING;
+    type ChannelState = ChannelState.FAILED | ChannelState.INITIALIZED | ChannelState.SUSPENDED | ChannelState.ATTACHED | ChannelState.ATTACHING | ChannelState.DETACHED | ChannelState.DETACHING;
 
     namespace ChannelEvent {
         type INITIALIZED = 'initialized';
@@ -32,15 +26,7 @@ declare namespace ablyLib {
         type FAILED = "failed";
         type UPDATE = "update";
     }
-    type ChannelEvent =
-        ChannelEvent.FAILED
-        | ChannelEvent.INITIALIZED
-        | ChannelEvent.SUSPENDED
-        | ChannelEvent.ATTACHED
-        | ChannelEvent.ATTACHING
-        | ChannelEvent.DETACHED
-        | ChannelEvent.DETACHING
-        | ChannelEvent.UPDATE;
+    type ChannelEvent = ChannelEvent.FAILED | ChannelEvent.INITIALIZED | ChannelEvent.SUSPENDED | ChannelEvent.ATTACHED | ChannelEvent.ATTACHING | ChannelEvent.DETACHED | ChannelEvent.DETACHING | ChannelEvent.UPDATE;
 
     namespace ConnectionState {
         type INITIALIZED = "initialized";
@@ -52,15 +38,7 @@ declare namespace ablyLib {
         type CLOSED = "closed";
         type FAILED = "failed";
     }
-    type ConnectionState =
-        ConnectionState.INITIALIZED
-        | ConnectionState.CONNECTED
-        | ConnectionState.CONNECTING
-        | ConnectionState.DISCONNECTED
-        | ConnectionState.SUSPENDED
-        | ConnectionState.CLOSED
-        | ConnectionState.CLOSING
-        | ConnectionState.FAILED;
+    type ConnectionState = ConnectionState.INITIALIZED | ConnectionState.CONNECTED | ConnectionState.CONNECTING | ConnectionState.DISCONNECTED | ConnectionState.SUSPENDED | ConnectionState.CLOSED | ConnectionState.CLOSING | ConnectionState.FAILED;
 
     namespace ConnectionEvent {
         type INITIALIZED = "initialized";
@@ -73,16 +51,7 @@ declare namespace ablyLib {
         type FAILED = "failed";
         type UPDATE = "update";
     }
-    type ConnectionEvent =
-        ConnectionEvent.INITIALIZED
-        | ConnectionEvent.CONNECTED
-        | ConnectionEvent.CONNECTING
-        | ConnectionEvent.DISCONNECTED
-        | ConnectionEvent.SUSPENDED
-        | ConnectionEvent.CLOSED
-        | ConnectionEvent.CLOSING
-        | ConnectionEvent.FAILED
-        | ConnectionEvent.UPDATE;
+    type ConnectionEvent = ConnectionEvent.INITIALIZED | ConnectionEvent.CONNECTED | ConnectionEvent.CONNECTING | ConnectionEvent.DISCONNECTED | ConnectionEvent.SUSPENDED | ConnectionEvent.CLOSED | ConnectionEvent.CLOSING | ConnectionEvent.FAILED | ConnectionEvent.UPDATE;
 
     namespace PresenceAction {
         type ABSENT = "absent";
@@ -91,12 +60,7 @@ declare namespace ablyLib {
         type LEAVE = "leave";
         type UPDATE = "update";
     }
-    type PresenceAction =
-        PresenceAction.ABSENT
-        | PresenceAction.PRESENT
-        | PresenceAction.ENTER
-        | PresenceAction.LEAVE
-        | PresenceAction.UPDATE;
+    type PresenceAction = PresenceAction.ABSENT | PresenceAction.PRESENT | PresenceAction.ENTER | PresenceAction.LEAVE | PresenceAction.UPDATE;
 
     namespace StatsIntervalGranularity {
         type MINUTE = "minute";
@@ -104,11 +68,7 @@ declare namespace ablyLib {
         type DAY = "day";
         type MONTH = "month";
     }
-    type StatsIntervalGranularity =
-        StatsIntervalGranularity.MINUTE
-        | StatsIntervalGranularity.HOUR
-        | StatsIntervalGranularity.DAY
-        | StatsIntervalGranularity.MONTH;
+    type StatsIntervalGranularity = StatsIntervalGranularity.MINUTE | StatsIntervalGranularity.HOUR | StatsIntervalGranularity.DAY | StatsIntervalGranularity.MONTH;
 
     namespace HTTPMethods {
         type POST = "POST";
@@ -334,7 +294,7 @@ declare namespace ablyLib {
     }
 
     // Common Listeners
-    type paginatedResultCallback<T> = (error: ErrorInfo, results: PaginatedResult<T>) => void;
+    type paginatedResultCallback<T> = (error: ErrorInfo, results: PaginatedResult<T> ) => void;
     type standardCallback = (error: ErrorInfo, results: any) => void;
     type messageCallback<T> = (message: T) => void;
     type errorCallback = (error: ErrorInfo) => void;
@@ -386,7 +346,7 @@ declare namespace ablyLib {
     class Channel {
         name: string;
         presence: Presence;
-        history: (paramsOrCallback?: RestPresenceHistoryParams | paginatedResultCallback<Realtime.Message>, callback?: paginatedResultCallback<Realtime.Message>) => void;
+        history: (paramsOrCallback?: RestPresenceHistoryParams | paginatedResultCallback<Message>, callback?: paginatedResultCallback<Message>) => void;
         publish: (messagesOrName: any, messagedataOrCallback?: errorCallback | any, callback?: errorCallback) => void;
     }
 
@@ -397,9 +357,9 @@ declare namespace ablyLib {
         presence: RealtimePresence;
         attach: (callback?: standardCallback) => void;
         detach: (callback?: standardCallback) => void;
-        history: (paramsOrCallback?: RealtimePresenceHistoryParams | paginatedResultCallback<Realtime.Message>, callback?: paginatedResultCallback<Realtime.Message>) => void;
-        subscribe: (eventOrCallback: messageCallback<Realtime.Message> | string, listener?: messageCallback<Realtime.Message>) => void;
-        unsubscribe: (eventOrCallback?: messageCallback<Realtime.Message> | string, listener?: messageCallback<Realtime.Message>) => void;
+        history: (paramsOrCallback?: RealtimePresenceHistoryParams | paginatedResultCallback<Message>, callback?: paginatedResultCallback<Message>) => void;
+        subscribe: (eventOrCallback: messageCallback<Message> | string, listener?: messageCallback<Message>) => void;
+        unsubscribe: (eventOrCallback?: messageCallback<Message> | string, listener?: messageCallback<Message>) => void;
         publish: (messagesOrName: any, messageDataOrCallback?: errorCallback | any, callback?: errorCallback) => void;
         setOptions: (options: any, callback?: errorCallback) => void;
     }
@@ -409,9 +369,23 @@ declare namespace ablyLib {
         release: (name: string) => void;
     }
 
+    export class Message {
+        constructor();
+        static fromEncoded: fromEncoded<Message>;
+        static fromEncodedArray: fromEncodedArray<Message>;
+        clientId: string;
+        connectionId: string;
+        data: any;
+        encoding: string;
+        extras: any;
+        id: string;
+        name: string;
+        timestamp: number;
+    }
+
+
     class PresenceMessage {
         constructor();
-
         static fromEncoded: fromEncoded<PresenceMessage>;
         static fromEncodedArray: fromEncodedArray<PresenceMessage>;
         action: PresenceAction;
@@ -421,11 +395,6 @@ declare namespace ablyLib {
         encoding: string;
         id: string;
         timestamp: number;
-    }
-
-    interface PresenceMessageStatic {
-        fromEncoded: fromEncoded<PresenceMessage>;
-        fromEncodedArray: fromEncodedArray<PresenceMessage>;
     }
 
     interface Crypto {
@@ -441,7 +410,7 @@ declare namespace ablyLib {
         state: ConnectionState;
         close: () => void;
         connect: () => void;
-        ping: (callback?: (error: ErrorInfo, responseTime: number) => void) => void;
+        ping: (callback?: (error: ErrorInfo, responseTime: number ) => void ) => void;
     }
 
     class Stats {
@@ -475,57 +444,26 @@ declare namespace ablyLib {
     }
 }
 
-export import ClientOptions = ablyLib.ClientOptions;
-
-declare namespace ablyCommon {
-
-    export class Message {
-        constructor();
-
-        static fromEncoded: ablyLib.fromEncoded<Message>;
-        static fromEncodedArray: ablyLib.fromEncodedArray<Message>;
-        clientId: string;
-        connectionId: string;
-        data: any;
-        encoding: string;
-        extras: any;
-        id: string;
-        name: string;
-        timestamp: number;
-    }
-}
-
-export declare namespace Realtime {
-    export import Message = ablyCommon.Message;
-}
-
-export declare namespace Rest {
-    export import Message = ablyCommon.Message;
-}
-
-
 export declare class Rest {
-    constructor(options: ClientOptions | ablyLib.ClientOptions | string);
-    static Crypto: ablyLib.Crypto;
-    static PresenceMessage: ablyLib.PresenceMessageStatic;
-    auth: ablyLib.Auth;
-    channels: ablyLib.Channels<ablyLib.Channel>;
-    request: (method: string, path: string, params?: any, body?: any[] | any, headers?: any, callback?: (error: ablyLib.ErrorInfo, response: ablyLib.HttpPaginatedResponse) => void) => void;
-    stats: (paramsOrCallback?: ablyLib.paginatedResultCallback<ablyLib.Stats> | any, callback?: ablyLib.paginatedResultCallback<ablyLib.Stats>) => void;
-    time: (paramsOrCallback?: ablyLib.timeCallback | any, callback?: ablyLib.timeCallback) => void;
+    constructor(options: Realtime.ClientOptions | string);
+    static Crypto: Realtime.Crypto;
+    auth: Realtime.Auth;
+    channels: Realtime.Channels<Realtime.Channel>;
+    request: (method: string, path: string, params?: any, body?: any[] | any, headers?: any, callback?: (error: Realtime.ErrorInfo, response: Realtime.HttpPaginatedResponse) => void) => void;
+    stats: (paramsOrCallback?: Realtime.paginatedResultCallback<Realtime.Stats> | any, callback?: Realtime.paginatedResultCallback<Realtime.Stats>) => void;
+    time: (paramsOrCallback?: Realtime.timeCallback | any, callback?: Realtime.timeCallback) => void;
 }
 
 export declare class Realtime {
-    constructor(options: ClientOptions | ablyLib.ClientOptions | string);
-    static Crypto: ablyLib.Crypto;
-    static PresenceMessage: ablyLib.PresenceMessageStatic;
-    auth: ablyLib.Auth;
-    channels: ablyLib.Channels<ablyLib.RealtimeChannel>;
+    constructor(options: Realtime.ClientOptions | string);
+    static Crypto: Realtime.Crypto;
+    auth: Realtime.Auth;
+    channels: Realtime.Channels<Realtime.RealtimeChannel>;
     clientId: string;
-    connection: ablyLib.Connection;
-    request: (method: string, path: string, params?: any, body?: any[] | any, headers?: any, callback?: (error: ablyLib.ErrorInfo, response: ablyLib.HttpPaginatedResponse) => void) => void;
-    stats: (paramsOrCallback?: ablyLib.paginatedResultCallback<ablyLib.Stats> | any, callback?: ablyLib.paginatedResultCallback<ablyLib.Stats>) => void;
+    connection: Realtime.Connection;
+    request: (method: string, path: string, params?: any, body?: any[] | any, headers?: any, callback?: (error: Realtime.ErrorInfo, response: Realtime.HttpPaginatedResponse) => void) => void;
+    stats: (paramsOrCallback?: Realtime.paginatedResultCallback<Realtime.Stats> | any, callback?: Realtime.paginatedResultCallback<Realtime.Stats>) => void;
     close: () => void;
     connect: () => void;
-    time: (paramsOrCallback?: ablyLib.timeCallback | any, callback?: ablyLib.timeCallback) => void;
+    time: (paramsOrCallback?: Realtime.timeCallback | any, callback?: Realtime.timeCallback) => void;
 }

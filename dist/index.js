@@ -1,24 +1,30 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-const Ably = require("ably");
-class Startup {
+const ably_1 = require("ably");
+class App {
     constructor() {
-        this.client = new Ably.Realtime('AQymZA.8ELEoA:gQFVyi457vFehkyG');
-        this.client.connection.on('connected', function () {
-            console.log('connected');
-        });
+        // Create an empty object of the ClientOptions interface
+        const realtimeOpts = {};
+        realtimeOpts.key = 'AQymZA.8ELEoA:gQFVyi457vFehkyG';
+        realtimeOpts.echoMessages = true;
+        this.realtimeClient = new ably_1.Realtime(realtimeOpts);
+        this.realtimeClient.connection.on('connected', () => console.log('connected'));
+        const restOpts = {};
+        restOpts.key = 'AQymZA.8ELEoA:gQFVyi457vFehkyG';
+        restOpts.echoMessages = true;
+        this.restClient = new ably_1.Rest(restOpts);
     }
-    sendMessage() {
-        let channel = this.client.channels.get('test');
-        channel.subscribe(function (m) {
-            console.log("name is ", m.name);
-        });
-        let message = new Ably.Realtime.Message();
-        message.name = 'ciao';
-        channel.publish(message);
-        // channel.publish('ciao', '') // <- this works
+    send() {
+        const ch1 = this.realtimeClient.channels.get('test');
+        ch1.subscribe(m => console.log("message from", m.name));
+        const msg1 = new ably_1.Realtime.Message();
+        msg1.name = 'realtime';
+        ch1.publish(msg1);
+        const msg2 = new ably_1.Realtime.Message();
+        msg2.name = 'rest';
+        this.restClient.channels.get('test').publish(msg2);
     }
 }
-const a = new Startup();
-a.sendMessage();
+const app = new App();
+app.send();
 //# sourceMappingURL=index.js.map
